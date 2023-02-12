@@ -1,0 +1,128 @@
+---
+title: "Assignment 1"
+author: "Team 6"
+date: "2023-02-09"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(dplyr)
+library(tidyverse)
+library(lattice)
+```
+
+```{R}
+SP <-read.csv("C:/Users/ritikaa/Desktop/data set for R/StudentsPerformance.csv")
+```
+#print the structure of the dataset
+```{r}
+str(SP)
+```
+#all the variables in the dataset
+```{r}
+names(SP)
+```
+#first 15 rows
+```{r}
+head(SP,15)
+```
+#userdefined function
+```{r}
+grpnbr <-function()
+{
+  print("Hello Team 6")
+}
+grpnbr()
+```
+#Reshaping technique
+```{r}
+SP1 <-SP %>%
+  mutate(id = row_number()) %>%
+  gather(key = "Subject", value = "Score", math.score, reading.score, writing.score)
+head(SP1,10)
+```
+#filter for math score
+```{r}
+SP %>% filter(math.score == 89 )
+```
+#identify duplicate
+```{r}
+duplicated(SP)
+```
+#remove duplicate
+```{r}
+dedupe<-SP[!duplicated(SP),]
+dedupe
+```
+#remove missing values
+```{r}
+na.omit(SP)
+```
+#rename the columns
+```{r}
+names(SP)[names(SP) == "math.score"]<-"subject1"
+names(SP)[names(SP) == "reading.score"]<-"subject2"
+names(SP)[names(SP) == "writing.score"]<-"subject3"
+```
+```{r}
+head(SP,5)
+```
+#descending order for subject 1
+```{r}
+des <- SP %>%
+ arrange(desc(subject1))
+head(des,15)
+```
+#random number generator engine
+```{r}
+sample.int(100, 5)
+```
+#Print the summary statistics of your datasheet
+```{r}
+summary(SP)
+```
+#mode
+```{r}
+find_mode <- function(x1) 
+  {
+m <- unique(x1)
+tab <- tabulate(match(x1, m))
+m[tab == max(tab)]
+}
+find_mode(SP$subject1)
+```
+#mean
+```{r}
+mean(SP$subject2)
+```
+#median
+```{r}
+median(SP$subject1)
+```
+#range
+```{r}
+range(SP$subject3)
+```
+#scatter plot for 2 variables
+```{r}
+plot(SP$subject1,SP$subject3,pch = 19, col="blue")
+```
+#bar plot for 2 variables
+```{r}
+sp_new <- SP %>% mutate(id = row_number())
+barplot(head(sp_new$subject3,5),head(sp_new$id,5), col = "pink")
+
+```
+#corelation between 2 variables
+```{r}
+cor(SP$subject2,SP$subject3)
+```
+
+
+
+
+
+
